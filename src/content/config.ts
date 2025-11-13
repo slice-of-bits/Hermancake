@@ -7,9 +7,7 @@ export const collections = {
             title: z.string(),
             short_description: z.string(),
             tags: z.array(z.string()),
-            image: image().refine((img) => img.width >= 1080, {
-                message: "Cover image must be at least 1080 pixels wide!",
-            }),
+            image: image(),
             ingredients: z.array(
                 z.object({name: z.string(), amount: z.string()})
             ).nullable()
