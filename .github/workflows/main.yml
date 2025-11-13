@@ -46,7 +46,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/slice-of-bits/Hermancake:latest
+          tags: ghcr.io/slice-of-bits/hermancake:latest
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.10
