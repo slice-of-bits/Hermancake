@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -42,13 +45,12 @@ jobs:
 
       - name: Build and push Docker image
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/slice-of-bits/hermancake:latest
+        run: |
+          docker build -t ghcr.io/${{github.repository}}:latest .
+          docker push ghcr.io/${{github.repository}}:latest
 
       - name: Deploy via SSH
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
